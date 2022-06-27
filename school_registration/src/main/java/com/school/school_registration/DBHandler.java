@@ -1,44 +1,86 @@
 package com.school.school_registration;
 
-import javafx.collections.FXCollections;
-
 import java.sql.*;
+import java.util.ArrayList;
 
 
-public class DBHandler extends ConfigsDB {
-    Connection dbConnection;
+    public class DBHandler extends ConfigsDB {
+        Connection dbConnection;
 
-    public Connection getDbConnection()
-            throws ClassNotFoundException, SQLException{
+        public Connection getDbConnection()
+                throws ClassNotFoundException, SQLException{
 
-    String connectionString = "jdbc:mysql://" + dbHost + ":" +
-             dbPort + "/" +dbName;
+        String connectionString = "jdbc:mysql://" + dbHost + ":" +
+                 dbPort + "/" +dbName;
 
-    Class.forName("com.mysql.jdbc.Driver");
-    dbConnection = DriverManager.getConnection(connectionString, dbUser, dbPass);
+        Class.forName("com.mysql.jdbc.Driver");
+        dbConnection = DriverManager.getConnection(connectionString, dbUser, dbPass);
 
-        return dbConnection;
-    }
+            return dbConnection;
+        }
 
+    //----------------------------------------------------------------------------------------------------------------
 
-    public ResultSet getCountry (Countries country){
-        ResultSet getcountry = null;
+    public ArrayList<String> getCountry (){
+        ResultSet resultSet = null;
+        ArrayList <String> listCountries = new ArrayList<>();
 
-        String select = "SELECT * FROM" + Constants.COUNTRIES;
+        String select = "SELECT * FROM " + Constants.COUNTRIES;
 
         try {
             PreparedStatement prST = getDbConnection().prepareStatement(select);
-            prST.setString(1, country.getNameCountry());
-            getcountry = prST.executeQuery();
+            resultSet = prST.executeQuery();
 
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        return getcountry ;
+        try {
+            while (resultSet.next()){
+                listCountries.add(resultSet.getString("nameCountry"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listCountries;
     }
 
+    //--------------------------------------------------------------------------------------------------------------
+    public ArrayList<String> getTown () {
+        ResultSet resultSet = null;
+        ArrayList<String> listTowns = new ArrayList<>();
+
+        //String primKeyCountries = studentsController();
+
+        String select = "SELECT * FROM " + Constants.TOWNS + " WHERE "
+                                         + Constants.FK_ID_COUNTRY + "=' " + "2" + " ' ";
+
+        try {
+            PreparedStatement prST = getDbConnection().prepareStatement(select);
+            resultSet = prST.executeQuery();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            while (resultSet.next()) {
+                listTowns.add(resultSet.getString("nameTown"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listTowns;
+    }
+
+    //---------------------------------------------------------------------------------------------------------------
+
     public void registerStudents(Students student){
+        ResultSet resultSet = null;
 
         String insert = " INSERT INTO " + Constants.STUDENTS + "("
                                         + Constants.STUDENTS_NAME + "," + Constants.STUDENTS_SURNAME + ","
@@ -63,12 +105,14 @@ public class DBHandler extends ConfigsDB {
             prSt.setString( 9, student.getAddress());
             prSt.setString( 10, student.getClasses());
             prSt.setString( 11, String.valueOf(student.getDateRegistration()));
-            prSt.executeUpdate();
+
 
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
+
+    //---------------------------------------------------------------------------------------------------------------
 
 
 

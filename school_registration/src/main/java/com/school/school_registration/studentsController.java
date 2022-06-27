@@ -1,6 +1,10 @@
 package com.school.school_registration;
 
 import java.net.URL;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -69,32 +73,50 @@ public class studentsController {
     @FXML
     void initialize() {
 
-        students_country.setOnAction (event -> {
-            getCountry();
-        });
+        //----------------------------------------------
 
+        students_country.setOnShown (event -> {
+            System.out.println("Countries show");
+        });
+        getCountry();
+
+        //-----------------------------------------------
+
+        students_town.setOnShown(event -> {
+            System.out.println("Town show");
+        });
+        getTown();
+
+        //------------------------------------------------
 
         students_add_button.setOnAction(event -> {
             registerStudentsUp();
         });
 
+        //-------------------------------------------------
 
 
     }
 
+    //---------------------------------------------------------------------------------------------------------------
     private void getCountry() {
         DBHandler dbHandler = new DBHandler();
 
-        String nameCountry = students_country.getPromptText();
-
-        Countries country = new Countries(nameCountry);
-        dbHandler.getCountry(country);
-
+        ArrayList<String> dbCountries =  dbHandler.getCountry();
+        students_country.getItems().addAll((Collection)dbCountries);
 
     }
 
+    //---------------------------------------------------------------------------------------------------------------
 
+    private void getTown(){
+        DBHandler dbHandler = new DBHandler();
 
+        ArrayList<String> dbTowns = dbHandler.getTown();
+        students_town.getItems().addAll((Collection)dbTowns);
+    }
+
+    //---------------------------------------------------------------------------------------------------------------
     private void registerStudentsUp(){
         DBHandler dbHandler = new DBHandler();
 
@@ -104,10 +126,10 @@ public class studentsController {
         Callback<DatePicker, DateCell> dateBirth = students_birth.getDayCellFactory();
         String email = students_email.getText();
         String phone = students_phone.getText();
-        String country = students_country.getPromptText();
-        String town = students_town.getPromptText();
+        String country = (String) students_country.getValue();
+        String town = (String) students_town.getPromptText();
         String address = students_address.getText();
-        String classes = students_class.getPromptText();
+        String classes = (String) students_class.getPromptText();
         Callback<DatePicker, DateCell> dateRegistration = students_date_registration.getDayCellFactory();
 
         if (students_gender_male.isSelected())
@@ -120,6 +142,8 @@ public class studentsController {
                                          (DatePicker) dateRegistration);
         dbHandler.registerStudents(student);
         }
+
+     //--------------------------------------------------------------------------------------------------------------
 
 
     }

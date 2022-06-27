@@ -59,10 +59,7 @@ public class Students {
         this.gender = gender;
     }
 
-    public DatePicker getDateBirth() {
-
-        return dateBirth;
-    }
+    public DatePicker getDateBirth() {return dateBirth;}
 
     public void setDateBirth(DatePicker dateBirth) {
         this.dateBirth = dateBirth;
