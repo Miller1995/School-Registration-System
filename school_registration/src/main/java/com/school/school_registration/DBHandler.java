@@ -19,7 +19,7 @@ import java.util.ArrayList;
             return dbConnection;
         }
 
-    //----------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------
 
     public ArrayList<String> getCountry (){
         ResultSet resultSet = null;
@@ -79,6 +79,35 @@ import java.util.ArrayList;
 
     //---------------------------------------------------------------------------------------------------------------
 
+        public ArrayList<String> getClassRooms(){
+            ResultSet resultSet = null;
+            ArrayList<String> listClassRooms = new ArrayList<>();
+
+            String select = "SELECT * FROM " + Constants.CLASS;
+
+
+            try {
+            PreparedStatement prST = getDbConnection().prepareStatement(select);
+            resultSet = prST.executeQuery();
+
+            } catch (SQLException | ClassNotFoundException e){
+                throw new RuntimeException(e);
+            }
+
+            try {
+                while (resultSet.next()){
+                    listClassRooms.add(resultSet.getString( "nameClass"));
+                }
+                resultSet.close();
+            } catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+            return listClassRooms;
+        }
+
+
+    //---------------------------------------------------------------------------------------------------------------
+
     public void registerStudents(Students student){
         ResultSet resultSet = null;
 
@@ -106,7 +135,7 @@ import java.util.ArrayList;
             prSt.setString( 10, student.getClasses());
             prSt.setString( 11, String.valueOf(student.getDateRegistration()));
 
-
+            prSt.close();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

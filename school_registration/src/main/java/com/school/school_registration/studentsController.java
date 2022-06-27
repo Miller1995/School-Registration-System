@@ -78,14 +78,14 @@ public class studentsController {
         students_country.setOnShown (event -> {
             System.out.println("Countries show");
         });
-        getCountry();
+            getCountry();
 
         //-----------------------------------------------
 
         students_town.setOnShown(event -> {
             System.out.println("Town show");
         });
-        getTown();
+            getTown();
 
         //------------------------------------------------
 
@@ -95,7 +95,27 @@ public class studentsController {
 
         //-------------------------------------------------
 
+        students_class.setOnShown(event -> {
+            System.out.println("Show class");
+        });
+            getClassRooms();
 
+        //-------------------------------------------------
+
+        students_update_button.setDisable(true);
+
+        //-------------------------------------------------
+
+        students_delete_button.setDisable(true);
+
+
+    }
+
+    private void getClassRooms() {
+        DBHandler dbHandler = new DBHandler();
+
+        ArrayList<String> dbClassRooms = dbHandler.getClassRooms();
+        students_class.getItems().addAll((Collection) dbClassRooms);
     }
 
     //---------------------------------------------------------------------------------------------------------------

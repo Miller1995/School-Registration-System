@@ -15,6 +15,13 @@ public class Constants {
 
     //--------------------------------------------------------------------------------------------------------------
 
+    public static final String CLASS = "classrooms";
+    public static final String ID_CLASS = "idClass";
+    public static final String NAME_CLASS = "nameClass";
+
+
+    //--------------------------------------------------------------------------------------------------------------
+
     public static final String STUDENTS= "students";
     public static final String STUDENTS_NAME = "students_name";
     public static final String STUDENTS_SURNAME = "students_surname";
