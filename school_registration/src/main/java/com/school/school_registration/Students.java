@@ -9,18 +9,18 @@ public class Students {
     private String name;
     private String surname;
     private String gender;
-    private DatePicker dateBirth;
+    private String dateBirth;
     private String email;
     private String phone;
     private String country;
     private String town;
     private String address;
     private String classes;
-    private DatePicker dateRegistration;
+    private String dateRegistration;
 
-    public Students(String name, String surname, String gender, DatePicker dateBirth, String email,
+    public Students(String name, String surname, String gender, String dateBirth, String email,
                     String phone, String country, String town, String address, String classes,
-                    DatePicker dateRegistration) {
+                    String dateRegistration) {
 
         this.name = name;
         this.surname = surname;
@@ -59,9 +59,9 @@ public class Students {
         this.gender = gender;
     }
 
-    public DatePicker getDateBirth() {return dateBirth;}
+    public String getDateBirth() {return dateBirth;}
 
-    public void setDateBirth(DatePicker dateBirth) {
+    public void setDateBirth(String dateBirth) {
         this.dateBirth = dateBirth;
     }
 
@@ -113,11 +113,11 @@ public class Students {
         this.classes = classes;
     }
 
-    public DatePicker getDateRegistration() {
+    public String getDateRegistration() {
         return dateRegistration;
     }
 
-    public void setDateRegistration(DatePicker dateRegistration) {
+    public void setDateRegistration(String dateRegistration) {
         this.dateRegistration = dateRegistration;
     }
 }

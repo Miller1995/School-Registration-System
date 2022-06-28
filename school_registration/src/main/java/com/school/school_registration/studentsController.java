@@ -96,7 +96,7 @@ public class studentsController {
         //-------------------------------------------------
 
         students_class.setOnShown(event -> {
-            System.out.println("Show class");
+            System.out.println("Class show");
         });
             getClassRooms();
 
@@ -114,8 +114,8 @@ public class studentsController {
     private void getClassRooms() {
         DBHandler dbHandler = new DBHandler();
 
-        ArrayList<String> dbClassRooms = dbHandler.getClassRooms();
-        students_class.getItems().addAll((Collection) dbClassRooms);
+        ArrayList<String> dbCountries =  dbHandler.getClassRooms();
+        students_class.getItems().addAll((Collection)dbCountries);
     }
 
     //---------------------------------------------------------------------------------------------------------------
@@ -143,23 +143,22 @@ public class studentsController {
         String name = students_name.getText();
         String surname = students_surname.getText();
         String gender = "";
-        Callback<DatePicker, DateCell> dateBirth = students_birth.getDayCellFactory();
+        String dateBirth = String.valueOf(students_birth.getValue());
         String email = students_email.getText();
         String phone = students_phone.getText();
         String country = (String) students_country.getValue();
-        String town = (String) students_town.getPromptText();
+        String town = (String) students_town.getValue();
         String address = students_address.getText();
-        String classes = (String) students_class.getPromptText();
-        Callback<DatePicker, DateCell> dateRegistration = students_date_registration.getDayCellFactory();
+        String classes = (String) students_class.getValue();
+        String dateRegistration = String.valueOf(students_date_registration.getValue());
 
         if (students_gender_male.isSelected())
             gender = "Male";
         else
             gender = "Female";
 
-        Students student = new Students (name, surname, gender, (DatePicker) dateBirth,
-                                         email, phone, country, town, address, classes,
-                                         (DatePicker) dateRegistration);
+        Students student = new Students (name, surname, gender,  dateBirth,
+                                         email, phone, country, town, address, classes, dateRegistration);
         dbHandler.registerStudents(student);
         }
 
