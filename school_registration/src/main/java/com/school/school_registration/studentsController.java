@@ -1,15 +1,18 @@
 package com.school.school_registration;
 
+import java.io.IOException;
 import java.net.URL;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.util.Callback;
+import javafx.stage.Stage;
 
 public class studentsController {
 
@@ -59,7 +62,7 @@ public class studentsController {
     private TextField students_phone;
 
     @FXML
-    private Button students_save_button;
+    private Button students_clear_button;
 
     @FXML
     private TextField students_surname;
@@ -90,6 +93,7 @@ public class studentsController {
         //------------------------------------------------
 
         students_add_button.setOnAction(event -> {
+            System.out.println("Press button add");
             registerStudentsUp();
         });
 
@@ -102,14 +106,29 @@ public class studentsController {
 
         //-------------------------------------------------
 
+        students_clear_button.setOnAction(event -> {
+            System.out.println("Press button clear");
+            clearStudentsTextField();
+        });
+
+        //-------------------------------------------------
+
+        students_info_button.setOnAction(event -> {
+            students_info_button.getScene().getWindow();
+            openNewWindows("students_dates.fxml");
+        });
+
+        //-------------------------------------------------
+
         students_update_button.setDisable(true);
 
         //-------------------------------------------------
 
         students_delete_button.setDisable(true);
 
-
+        //-------------------------------------------------
     }
+
 
     private void getClassRooms() {
         DBHandler dbHandler = new DBHandler();
@@ -140,29 +159,67 @@ public class studentsController {
     private void registerStudentsUp(){
         DBHandler dbHandler = new DBHandler();
 
-        String name = students_name.getText();
-        String surname = students_surname.getText();
-        String gender = "";
-        String dateBirth = String.valueOf(students_birth.getValue());
-        String email = students_email.getText();
-        String phone = students_phone.getText();
-        String country = (String) students_country.getValue();
-        String town = (String) students_town.getValue();
-        String address = students_address.getText();
-        String classes = (String) students_class.getValue();
-        String dateRegistration = String.valueOf(students_date_registration.getValue());
+          String name = students_name.getText();
+          String surname = students_surname.getText();
+          String gender = "";
+          String dateBirth = String.valueOf(students_birth.getValue());
+          String email = students_email.getText();
+          String phone = students_phone.getText();
+          String country = (String) students_country.getValue();
+          String town = (String) students_town.getValue();
+          String address = students_address.getText();
+          String classes = (String) students_class.getValue();
+          String dateRegistration = String.valueOf(students_date_registration.getValue());
 
-        if (students_gender_male.isSelected())
-            gender = "Male";
-        else
-            gender = "Female";
+          if (students_gender_male.isSelected())
+              gender = "Male";
+          else
+              gender = "Female";
 
-        Students student = new Students (name, surname, gender,  dateBirth,
-                                         email, phone, country, town, address, classes, dateRegistration);
-        dbHandler.registerStudents(student);
-        }
+          Students student = new Students(name, surname, gender, dateBirth,
+                  email, phone, country, town, address, classes, dateRegistration);
+          dbHandler.registerStudents(student);
+      }
 
      //--------------------------------------------------------------------------------------------------------------
+    private void clearStudentsTextField(){
+
+            students_name.clear();
+            students_surname.clear();
+            students_email.clear();
+            students_birth.setValue(null);
+            students_phone.clear();
+            students_country.setValue(null);
+            students_town.setValue(null);
+            students_address.clear();
+            students_class.setValue(null);
+            students_date_registration.setValue(null);
+
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+    public void openNewWindows(String window){
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(window));
+
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Students Dates");
+        stage.showAndWait();
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+
+
+
+    //--------------------------------------------------------------------------------------------------------------
 
 
     }

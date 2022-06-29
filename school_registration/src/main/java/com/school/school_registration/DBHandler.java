@@ -1,7 +1,10 @@
 package com.school.school_registration;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.ArrayList;
+
 
 
     public class DBHandler extends ConfigsDB {
@@ -109,7 +112,6 @@ import java.util.ArrayList;
     //---------------------------------------------------------------------------------------------------------------
 
     public void registerStudents(Students student){
-        ResultSet resultSet = null;
 
         String insert = " INSERT INTO " + Constants.STUDENTS + "("
                                         + Constants.STUDENTS_NAME + "," + Constants.STUDENTS_SURNAME + ","
@@ -143,6 +145,51 @@ import java.util.ArrayList;
     }
 
     //---------------------------------------------------------------------------------------------------------------
+
+        public ObservableList<Students> showDateStudents () {
+            ResultSet resultSet = null;
+            ObservableList<Students> obsList = FXCollections.observableArrayList();
+
+
+            String select = "SELECT* FROM " + Constants.STUDENTS;
+
+
+            try {
+
+                PreparedStatement prST = getDbConnection().prepareStatement(select);
+                resultSet = prST.executeQuery();
+
+            } catch (SQLException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+
+                while (resultSet.next()){
+                        obsList.add(new Students(resultSet.getString( "idstudents"),
+                                                resultSet.getString( "students_name"),
+                                                resultSet.getString(  "students_surname" ),
+                                                resultSet.getString( "students_gender"),
+                                                resultSet.getString( "students_dateBirth"),
+                                                resultSet.getString( "students_email"),
+                                                resultSet.getString( "students_phone"),
+                                                resultSet.getString( "students_country"),
+                                                resultSet.getString( "students_town"),
+                                                resultSet.getString( "students_address"),
+                                                resultSet.getString( "students_classes"),
+                                                resultSet.getString( "students_dateRegistration")));
+
+                }
+                resultSet.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return obsList;
+        }
+
+    //---------------------------------------------------------------------------------------------------------------
+
+
 
 
 

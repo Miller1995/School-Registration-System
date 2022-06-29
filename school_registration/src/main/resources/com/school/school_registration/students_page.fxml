@@ -39,7 +39,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="students_save_button" layoutX="33.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Save">
+            <Button fx:id="students_clear_button" layoutX="33.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Clear">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

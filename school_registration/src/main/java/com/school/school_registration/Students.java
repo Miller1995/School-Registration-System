@@ -1,11 +1,12 @@
 package com.school.school_registration;
 
-import javafx.scene.control.DatePicker;
 
-import java.util.Date;
 
 public class Students {
 
+
+
+    private String id;
     private String name;
     private String surname;
     private String gender;
@@ -18,7 +19,7 @@ public class Students {
     private String classes;
     private String dateRegistration;
 
-    public Students(String name, String surname, String gender, String dateBirth, String email,
+    public Students (String name, String surname, String gender, String dateBirth, String email,
                     String phone, String country, String town, String address, String classes,
                     String dateRegistration) {
 
@@ -35,6 +36,31 @@ public class Students {
         this.dateRegistration = dateRegistration;
     }
 
+
+
+    public Students (String id, String name, String surname, String gender, String dateBirth, String email,
+                    String phone, String country, String town, String address, String classes, String dateRegistration) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.gender = gender;
+        this.dateBirth = dateBirth;
+        this.email = email;
+        this.phone = phone;
+        this.country = country;
+        this.town = town;
+        this.address = address;
+        this.classes = classes;
+        this.dateRegistration = dateRegistration;
+    }
+
+
+    public String getId() {
+        return id;
+        }
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }

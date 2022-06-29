@@ -22,7 +22,8 @@ public class Constants {
 
     //--------------------------------------------------------------------------------------------------------------
 
-    public static final String STUDENTS= "students";
+    public static final String STUDENTS = "students";
+    public static final String STUDENTS_ID = "idstudents";
     public static final String STUDENTS_NAME = "students_name";
     public static final String STUDENTS_SURNAME = "students_surname";
     public static final String STUDENTS_GENDER = "students_gender";

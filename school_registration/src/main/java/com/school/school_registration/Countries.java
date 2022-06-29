@@ -5,7 +5,6 @@ public class Countries {
     private String nameCountry;
 
 
-
     public Countries( String nameCountry) {
         this.nameCountry = nameCountry;
     }
